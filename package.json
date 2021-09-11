@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.14",
     "node-sass": "^5.0.0"
   }
 }
