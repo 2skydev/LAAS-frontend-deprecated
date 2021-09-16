@@ -1,14 +1,17 @@
-import { AutoComplete } from "antd";
+import { AutoComplete, AutoCompleteProps } from "antd";
 
 import engraveOptions from "~/assets/json/engrave.json";
 
-export default function Engrave() {
+export default function Engrave(props: AutoCompleteProps) {
   return (
     <AutoComplete
-      style={{ width: "200px" }}
+      style={{ width: "150px" }}
       options={engraveOptions.map((option) => ({ value: option.label }))}
-      placeholder="각인 효과를 입력해주세요"
-      filterOption={(value, option) => option?.value.includes(value)}
+      placeholder="각인"
+      filterOption={(value, option) =>
+        value.split("").every((word) => option?.value.includes(word))
+      }
+      {...props}
     />
   );
 }
