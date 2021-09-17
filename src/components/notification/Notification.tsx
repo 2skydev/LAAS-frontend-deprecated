@@ -10,7 +10,6 @@ import { useLocalStorage } from "react-use";
 import accessoryNativeValues from "~/assets/json/accessory.json";
 import characteristicNativeValues from "~/assets/json/characteristic.json";
 import engraveNativeValues from "~/assets/json/engrave.json";
-import _ from "lodash";
 import { useEffect, useState } from "react";
 
 const NotificationStyled = styled.div`
@@ -61,11 +60,10 @@ interface Item {
 let init = false;
 
 export default function Notification() {
-  let [notification, setNotification] = useLocalStorage<Item[]>("notification");
-
-  if (!notification) {
-    notification = [];
-  }
+  let [notification, setNotification] = useLocalStorage<Item[]>(
+    "notification",
+    []
+  );
 
   const [tableData, setTableData] = useState<Item[]>([]);
 
@@ -148,15 +146,15 @@ export default function Notification() {
     const item = formik.values[index];
 
     if (!item.accessory) {
-      return alert("장신구를 선택해주세요");
+      item.accessory = "전체";
     }
 
     if (item.engrave1min && !item.engrave1) {
-      return alert("각인 효과 1 최소값을 지워주세요");
+      item.engrave1min = "";
     }
 
     if (item.engrave2min && !item.engrave2) {
-      return alert("각인 효과 2 최소값을 지워주세요");
+      item.engrave2min = "";
     }
 
     const items = [...(notification as Item[])];
@@ -233,6 +231,7 @@ export default function Notification() {
       render: (_: any, data: any, index: number) => {
         return (
           <Accessory
+            key={data.id + data.status}
             defaultValue={formik.values[index].accessory}
             onSelect={(value) => handleSelectAccessory(index, value)}
           />
@@ -275,7 +274,6 @@ export default function Notification() {
             <Engrave
               defaultValue={formik.values[index].engrave1}
               onChange={(value) => {
-                console.log(value);
                 if (value === "") {
                   handleSelectEngrave(index, 1, "");
                 }
@@ -285,7 +283,7 @@ export default function Notification() {
             <InputNumber
               style={{ width: 65 }}
               placeholder="최소"
-              defaultValue={formik.values[index].engrave1min}
+              value={formik.values[index].engrave1min}
               onChange={(value) => handleSelectEngraveMin(index, 1, value)}
               min="1"
               max="5"
@@ -304,9 +302,8 @@ export default function Notification() {
             <Engrave
               defaultValue={formik.values[index].engrave2}
               onChange={(value) => {
-                console.log(value);
                 if (value === "") {
-                  handleSelectEngrave(index, 1, "");
+                  handleSelectEngrave(index, 2, "");
                 }
               }}
               onSelect={(value) => handleSelectEngrave(index, 2, value)}
@@ -314,7 +311,7 @@ export default function Notification() {
             <InputNumber
               style={{ width: 65 }}
               placeholder="최소"
-              defaultValue={formik.values[index].engrave2min}
+              value={formik.values[index].engrave2min}
               onChange={(value) => handleSelectEngraveMin(index, 2, value)}
               min="1"
               max="5"

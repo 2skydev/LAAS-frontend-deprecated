@@ -1,14 +1,15 @@
 import { AutoComplete, AutoCompleteProps } from "antd";
-
-const options = [{ value: "목걸이" }, { value: "귀걸이" }, { value: "반지" }];
+import accessoryOptions from "~/assets/json/accessory.json";
 
 export default function Accessory(props: AutoCompleteProps) {
   return (
     <AutoComplete
       style={{ width: "80px" }}
-      options={options}
       placeholder="장신구"
-      filterOption={(value, option) => option?.value.includes(value)}
+      options={accessoryOptions.map((option) => ({ value: option.label }))}
+      filterOption={(value, option) =>
+        value.split("").every((word) => option?.value.includes(word))
+      }
       {...props}
     />
   );
