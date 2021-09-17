@@ -37,4 +37,31 @@
 
 * {
   font-family: "NanumSquareRound";
+  transition: 300ms background-color, 300ms color, 300ms border;
+}
+
+body {
+  .ant-switch {
+    height: 28px;
+    width: 56px;
+
+    .ant-switch-handle {
+      width: 24px;
+      height: 24px;
+
+      &::before {
+        border-radius: 50%;
+      }
+    }
+
+    .ant-switch-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .ant-switch-checked .ant-switch-handle {
+    left: calc(100% - 24px - 2px);
+  }
 }

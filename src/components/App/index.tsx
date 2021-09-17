@@ -9,12 +9,26 @@ import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "~/assets/ts/theme";
 import { useLocalStorage } from "react-use";
 import { BrowserRouter } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { themeState } from "~/stores/theme";
+import { useEffect } from "react";
 
 export default function App() {
-  const [themeMode] = useLocalStorage("theme", "light");
+  const [themeModeLS] = useLocalStorage("theme", "light");
+  const [themeMode, setThemeMode] = useRecoilState(themeState);
+
+  useEffect(() => {
+    setThemeMode(themeModeLS as string);
+  }, []);
 
   return (
-    <ThemeProvider theme={themeMode === "light" ? lightTheme : darkTheme}>
+    <ThemeProvider
+      theme={
+        (themeMode ? themeMode : themeModeLS) === "light"
+          ? lightTheme
+          : darkTheme
+      }
+    >
       <BrowserRouter>
         <AppStyled className="app">
           <Sidebar />
