@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const ContentStyled = styled.div`
   flex: 1;
   background-color: ${(props) => props.theme.contentBG};
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 
   .header {
     padding: 1.5rem 2rem;

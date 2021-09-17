@@ -15,7 +15,7 @@ export const menus = [
       {
         icon: "cog",
         link: "/settings",
-        text: "일반",
+        text: "일반 설정",
       },
       {
         icon: "bell",
