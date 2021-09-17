@@ -11,6 +11,7 @@ import accessoryNativeValues from "~/assets/json/accessory.json";
 import characteristicNativeValues from "~/assets/json/characteristic.json";
 import engraveNativeValues from "~/assets/json/engrave.json";
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 
 const NotificationStyled = styled.div`
   .ant-card {
@@ -21,15 +22,15 @@ const NotificationStyled = styled.div`
 const statusLabel = {
   create: {
     text: "생성중",
-    color: "blue",
+    color: "transparent",
   },
   save: {
     text: "저장됨",
-    color: "green",
+    color: "#4caf50",
   },
   edit: {
     text: "수정중",
-    color: "orange",
+    color: "#ff9800",
   },
 };
 
@@ -231,6 +232,7 @@ export default function Notification() {
       render: (_: any, data: any, index: number) => {
         return (
           <Accessory
+            className={clsx(data.status !== "create" && "noBorder")}
             key={data.id + data.status}
             defaultValue={formik.values[index].accessory}
             onSelect={(value) => handleSelectAccessory(index, value)}
@@ -245,6 +247,7 @@ export default function Notification() {
       render: (_: any, data: any, index: number) => {
         return (
           <Characteristic
+            className={clsx(data.status !== "create" && "noBorder")}
             defaultValue={formik.values[index].characteristic1}
             onSelect={(value) => handleSelectCharacteristic(index, 1, value)}
           />
@@ -258,6 +261,7 @@ export default function Notification() {
       render: (_: any, data: any, index: number) => {
         return (
           <Characteristic
+            className={clsx(data.status !== "create" && "noBorder")}
             defaultValue={formik.values[index].characteristic2}
             onSelect={(value) => handleSelectCharacteristic(index, 2, value)}
           />
@@ -272,6 +276,7 @@ export default function Notification() {
         return (
           <Space>
             <Engrave
+              className={clsx(data.status !== "create" && "noBorder")}
               defaultValue={formik.values[index].engrave1}
               onChange={(value) => {
                 if (value === "") {
@@ -281,6 +286,7 @@ export default function Notification() {
               onSelect={(value) => handleSelectEngrave(index, 1, value)}
             />
             <InputNumber
+              className={clsx(data.status !== "create" && "noBorder")}
               style={{ width: 65 }}
               placeholder="최소"
               value={formik.values[index].engrave1min}
@@ -300,6 +306,7 @@ export default function Notification() {
         return (
           <Space>
             <Engrave
+              className={clsx(data.status !== "create" && "noBorder")}
               defaultValue={formik.values[index].engrave2}
               onChange={(value) => {
                 if (value === "") {
@@ -309,6 +316,7 @@ export default function Notification() {
               onSelect={(value) => handleSelectEngrave(index, 2, value)}
             />
             <InputNumber
+              className={clsx(data.status !== "create" && "noBorder")}
               style={{ width: 65 }}
               placeholder="최소"
               value={formik.values[index].engrave2min}
@@ -327,6 +335,7 @@ export default function Notification() {
       render: (_: any, data: any, index: number) => {
         return (
           <Quality
+            className={clsx(data.status !== "create" && "noBorder")}
             defaultValue={formik.values[index].quality}
             onSelect={(value) => handleSelectQuality(index, value)}
           />
@@ -340,6 +349,7 @@ export default function Notification() {
       render: (_: any, data: any, index: number) => {
         return (
           <Input
+            className={clsx(data.status !== "create" && "noBorder")}
             defaultValue={formik.values[index].memo}
             onChange={(e) => handleChangeMemo(index, e.target.value)}
             placeholder="메모"

@@ -5,7 +5,7 @@ import { SectionStyled } from "./styled";
 interface Props {
   children?: ReactNode;
   title: string;
-  desc?: string;
+  desc?: ReactNode;
 }
 
 export default function Section({ title, desc, children }: Props) {

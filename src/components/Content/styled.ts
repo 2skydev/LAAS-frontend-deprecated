@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const ContentStyled = styled.div`
   flex: 1;
   background-color: ${(props) => props.theme.contentBG};
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
 
   .header {
     padding: 1.5rem 2rem;
@@ -24,6 +26,6 @@ export const ContentStyled = styled.div`
   }
 
   .content {
-    padding: 2rem;
+    padding: 3rem 2rem;
   }
 `;

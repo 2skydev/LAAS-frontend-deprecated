@@ -1,7 +1,7 @@
 import "antd/dist/antd.css";
 import "./index.scss";
 
-import { AppStyled } from "./styled";
+import { AppStyled, GlobalStyled } from "./styled";
 
 import Sidebar from "../Sidebar";
 import Content from "../Content";
@@ -13,8 +13,14 @@ import { useRecoilState } from "recoil";
 import { themeState } from "~/stores/theme";
 import { useEffect } from "react";
 
+type Theme = typeof lightTheme;
+
+declare module "styled-components" {
+  export interface DefaultTheme extends Theme {}
+}
+
 export default function App() {
-  const [themeModeLS] = useLocalStorage("theme", "light");
+  const [themeModeLS] = useLocalStorage("theme", "dark");
   const [themeMode, setThemeMode] = useRecoilState(themeState);
 
   useEffect(() => {
@@ -29,6 +35,7 @@ export default function App() {
           : darkTheme
       }
     >
+      <GlobalStyled />
       <BrowserRouter>
         <AppStyled className="app">
           <Sidebar />

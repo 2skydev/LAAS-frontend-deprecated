@@ -37,7 +37,6 @@
 
 * {
   font-family: "NanumSquareRound";
-  transition: 300ms background-color, 300ms color, 300ms border;
 }
 
 body {
@@ -63,5 +62,15 @@ body {
 
   .ant-switch-checked .ant-switch-handle {
     left: calc(100% - 24px - 2px);
+  }
+
+  .ant-btn {
+    border-radius: 4px;
+  }
+
+  .rightButtons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
   }
 }

@@ -1,5 +1,6 @@
 import Notification from "~/pages/Notification";
 import Setting from "~/pages/Setting";
+import SettingNotification from "~/pages/SettingNotification";
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
   },
   {
     path: "/settings/notification",
-    component: Setting,
+    component: SettingNotification,
   },
 ];
 

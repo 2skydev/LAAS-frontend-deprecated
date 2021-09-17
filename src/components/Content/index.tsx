@@ -13,7 +13,12 @@ export default function Content() {
       <div className="content">
         <Switch>
           {routes.map((route) => (
-            <Route path={route.path} component={route.component} exact />
+            <Route
+              key={route.path}
+              path={route.path}
+              component={route.component}
+              exact
+            />
           ))}
         </Switch>
       </div>
