@@ -1,10 +1,10 @@
 import { Button, Input, InputNumber, Space, Table, Tag, Tooltip } from "antd";
 import styled from "styled-components";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
-import Characteristic from "../select/Characteristic";
-import Engrave from "../select/Engrave";
-import Accessory from "../select/Accessory";
-import Quality from "../select/Quality";
+import Characteristic from "../components/Select/Characteristic";
+import Engrave from "../components/Select/Engrave";
+import Accessory from "../components/Select/Accessory";
+import Quality from "../components/Select/Quality";
 import { useFormik } from "formik";
 import { useLocalStorage } from "react-use";
 import accessoryNativeValues from "~/assets/json/accessory.json";
@@ -69,7 +69,7 @@ export default function Notification() {
 
   const formik = useFormik<Item[]>({
     initialValues: [],
-    onSubmit: (values) => {},
+    onSubmit: () => {},
   });
 
   const changeItemValue = (index: number, changer: (item: Item) => Item) => {
