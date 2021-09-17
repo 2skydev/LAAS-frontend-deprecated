@@ -22,4 +22,8 @@ export const ContentStyled = styled.div`
       margin-bottom: -1px;
     }
   }
+
+  .content {
+    padding: 2rem;
+  }
 `;

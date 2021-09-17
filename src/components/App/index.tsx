@@ -11,7 +11,7 @@ import { useLocalStorage } from "react-use";
 import { BrowserRouter } from "react-router-dom";
 
 export default function App() {
-  const [themeMode, setThemeMode] = useLocalStorage("theme", "light");
+  const [themeMode] = useLocalStorage("theme", "light");
 
   return (
     <ThemeProvider theme={themeMode === "light" ? lightTheme : darkTheme}>

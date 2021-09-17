@@ -5,4 +5,13 @@ export const AppStyled = styled.div`
   height: 100vh;
   display: flex;
   color: ${(props) => props.theme.textColor1};
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: ${(props) => props.theme.textColor1};
+  }
 `;
