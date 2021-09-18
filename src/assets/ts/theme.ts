@@ -9,6 +9,7 @@ export const lightTheme = {
   textColor1: "#222222",
   textColor2: "#777A88",
   success: "#4caf50",
+  error: "#ff4d4f",
   mode: "light",
 };
 
@@ -23,5 +24,6 @@ export const darkTheme = {
   textColor1: "#ffffff",
   textColor2: "#8E9297",
   success: "#4caf50",
+  error: "#ff4d4f",
   mode: "dark",
 };

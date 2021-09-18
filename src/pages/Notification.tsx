@@ -53,6 +53,7 @@ interface Item {
   engrave1min: string;
   engrave2min: string;
   quality: string;
+  maxPrice: string;
   memo: string;
   status: "create" | "save" | "edit";
   native: NativeValues;
@@ -143,6 +144,15 @@ export default function Notification() {
     });
   };
 
+  const handleChangeMaxPrice = (index: number, value: string) => {
+    changeItemValue(index, (item) => {
+      return {
+        ...item,
+        maxPrice: value,
+      };
+    });
+  };
+
   const save = (index: number) => {
     const item = formik.values[index];
 
@@ -213,6 +223,7 @@ export default function Notification() {
     quality: "",
     memo: "",
     status: "create",
+    maxPrice: "",
     native: {
       accessory: "",
       characteristic1: "",
@@ -241,7 +252,7 @@ export default function Notification() {
       },
     },
     {
-      title: "전투 특성 1",
+      title: "특성 1",
       key: "characteristic1",
       width: 80,
       render: (_: any, data: any, index: number) => {
@@ -255,7 +266,7 @@ export default function Notification() {
       },
     },
     {
-      title: "전투 특성 2",
+      title: "특성 2",
       key: "characteristic2",
       width: 80,
       render: (_: any, data: any, index: number) => {
@@ -269,7 +280,7 @@ export default function Notification() {
       },
     },
     {
-      title: "각인 효과 1",
+      title: "각인 1",
       key: "engrave1",
       width: 200,
       render: (_: any, data: any, index: number) => {
@@ -299,7 +310,7 @@ export default function Notification() {
       },
     },
     {
-      title: "각인 효과 2",
+      title: "각인 2",
       key: "engrave2",
       width: 200,
       render: (_: any, data: any, index: number) => {
@@ -343,9 +354,26 @@ export default function Notification() {
       },
     },
     {
+      title: "최대가격",
+      key: "maxPrice",
+      width: 120,
+      render: (_: any, data: any, index: number) => {
+        return (
+          <InputNumber
+            className={clsx(data.status !== "create" && "noBorder")}
+            style={{ width: 110 }}
+            placeholder="최대가격"
+            value={formik.values[index].maxPrice}
+            onChange={(value) => handleChangeMaxPrice(index, value)}
+            formatter={(value) => `${Number(value).toLocaleString()}골드`}
+          />
+        );
+      },
+    },
+    {
       title: "메모",
       key: "memo",
-      width: 150,
+      width: 120,
       render: (_: any, data: any, index: number) => {
         return (
           <Input

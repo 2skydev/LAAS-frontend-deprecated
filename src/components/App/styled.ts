@@ -44,6 +44,18 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-table {
     background: none;
+
+    .ant-empty-image {
+      display: none;
+    }
+
+    .ant-empty-description {
+      color: ${(props) => props.theme.textColor2};
+    }
+  }
+  
+  .ant-table-tbody > tr.ant-table-placeholder:hover > td {
+    background-color: ${(props) => props.theme.contentBG};
   }
 
   .ant-table-thead > tr > th {
@@ -175,5 +187,9 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-table-cell-fix-left, .ant-table-cell-fix-right {
     background-color: ${(props) => props.theme.contentBG};
+  }
+
+  .ant-table-tbody > tr > td {
+    color: ${(props) => props.theme.textColor1};
   }
 `;

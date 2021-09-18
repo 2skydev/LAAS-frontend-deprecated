@@ -1,11 +1,15 @@
 import { Input, InputNumber, Space, Switch } from "antd";
 import { useFormik } from "formik";
 import { useLocalStorage } from "react-use";
+import { useSetRecoilState } from "recoil";
 import SaveButton from "~/components/SaveButton";
 import Section from "~/components/Section";
+import { notificationSettingState } from "~/stores/notificationSetting";
 
 const initialValues = {
-  userID: "",
+  lostarkID: "",
+  lostarkPW: "",
+  discordUserID: "",
   interval: 1,
   repeat: false,
 };
@@ -18,17 +22,56 @@ export default function SettingNotification() {
     initialValues
   );
 
+  const setNotificationSetting = useSetRecoilState(notificationSettingState);
+
   const formik = useFormik({
     initialValues: LS as InitialValues,
     onSubmit: (values) => {
       setLS(values);
+      setNotificationSetting(values);
     },
   });
 
   return (
     <div>
       <Section
-        title="Discord 사용자 ID"
+        title="로스트아크 계정 *"
+        desc={
+          <>
+            경매장을 검색하기 위해 로스트아크 계정이 필요합니다.
+            <br />
+            지정 PC, 소셜 로그인 같은 계정이 아닌 이메일 계정이 필요합니다.
+            <br />
+            <a
+              href="https://member.onstove.com/v2.0/register"
+              target="_blank"
+              rel="noreferrer"
+            >
+              로스트아크 이메일로 회원가입하기
+            </a>
+          </>
+        }
+      >
+        <Space className="inputs" size="middle" direction="vertical">
+          <Input
+            name="lostarkID"
+            value={formik.values.lostarkID}
+            onChange={formik.handleChange}
+            placeholder="로스트아크 ID"
+          />
+
+          <Input
+            type="password"
+            name="lostarkPW"
+            value={formik.values.lostarkPW}
+            onChange={formik.handleChange}
+            placeholder="로스트아크 비밀번호"
+          />
+        </Space>
+      </Section>
+
+      <Section
+        title="Discord 사용자 ID *"
         desc={
           <>
             알림을 받을 때 멘션을 하기 위해 Discord 사용자 ID를 수집하고
@@ -48,8 +91,8 @@ export default function SettingNotification() {
       >
         <Space className="inputs" size="middle">
           <Input
-            name="userID"
-            value={formik.values.userID}
+            name="discordUserID"
+            value={formik.values.discordUserID}
             onChange={formik.handleChange}
             placeholder="Discord 사용자 ID"
           />

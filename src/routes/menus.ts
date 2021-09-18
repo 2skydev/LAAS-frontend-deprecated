@@ -10,6 +10,16 @@ export const menus = [
     ],
   },
   {
+    title: "로그",
+    items: [
+      {
+        icon: "receipt",
+        link: "/logs/notification",
+        text: "매물 알림 로그",
+      },
+    ],
+  },
+  {
     title: "설정",
     items: [
       {

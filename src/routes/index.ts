@@ -1,4 +1,5 @@
 import Notification from "~/pages/Notification";
+import NotificationLog from "~/pages/NotificationLog";
 import Setting from "~/pages/Setting";
 import SettingNotification from "~/pages/SettingNotification";
 
@@ -17,6 +18,11 @@ const routes = [
     path: "/settings/notification",
     component: SettingNotification,
     text: "알림 설정",
+  },
+  {
+    path: "/logs/notification",
+    component: NotificationLog,
+    text: "매물 알림 로그",
   },
 ];
 
