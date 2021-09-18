@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContentStyled = styled.div`
-  flex: 1;
+  width: calc(100% - 300px);
   background-color: ${(props) => props.theme.contentBG};
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;

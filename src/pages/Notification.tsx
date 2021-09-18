@@ -345,7 +345,7 @@ export default function Notification() {
     {
       title: "메모",
       key: "memo",
-      width: 200,
+      width: 150,
       render: (_: any, data: any, index: number) => {
         return (
           <Input
@@ -361,7 +361,7 @@ export default function Notification() {
       title: "상태",
       dataIndex: "status",
       key: "status",
-      width: 120,
+      width: 80,
       render: (_: any, data: any, index: number) => {
         const status = formik.values[index].status;
 
@@ -375,6 +375,8 @@ export default function Notification() {
     {
       title: "기능",
       key: "action",
+      fixed: "right",
+      width: 100,
       render: (data: any, row: any, index: number) => {
         return (
           <Space size="middle">
@@ -418,6 +420,8 @@ export default function Notification() {
   return (
     <NotificationStyled>
       <Table
+        scroll={{ x: 1400 }}
+        // @ts-ignore
         columns={columns}
         dataSource={tableData}
         pagination={false}

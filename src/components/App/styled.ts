@@ -12,7 +12,26 @@ export const AppStyled = styled.div`
 export const GlobalStyled = createGlobalStyle`
   body {
     background-color: ${(props) => props.theme.sidebarBG};
+    user-select: none;
   }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: ${(props) => props.theme.scrollTrackBG};
+    border-radius: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: ${(props) => props.theme.scrollThumbBG};
+    border-radius: 8px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+  }
+  
 
   h1,
   h2,
@@ -152,5 +171,9 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-input.noBorder, .ant-select.noBorder .ant-select-selector, .ant-input-number.noBorder {
     border-color: transparent;
+  }
+
+  .ant-table-cell-fix-left, .ant-table-cell-fix-right {
+    background-color: ${(props) => props.theme.contentBG};
   }
 `;

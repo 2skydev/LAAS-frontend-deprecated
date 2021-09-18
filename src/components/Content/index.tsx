@@ -15,7 +15,7 @@ export default function Content() {
         <motion.span
           initial={{ opacity: 0, x: 3 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.3 }}
           key={location.pathname}
         >
           {route?.text || "해당 페이지의 이름이 없는거 같네요..."}
@@ -31,7 +31,7 @@ export default function Content() {
                   key="animate"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <route.component />
                 </motion.div>
