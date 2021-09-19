@@ -8,7 +8,7 @@ import Content from "../Content";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "~/assets/ts/theme";
 import { useLocalStorage } from "react-use";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { themeState } from "~/stores/theme";
 import { useEffect } from "react";
@@ -31,6 +31,50 @@ declare global {
 }
 
 window.notificationLogs = [];
+
+let ipcRenderer: any;
+
+if (window.electron) {
+  const { ipcRenderer: _ipcRenderer } = window.require("electron");
+  ipcRenderer = _ipcRenderer;
+}
+
+function AppInner() {
+  const history = useHistory();
+
+  const appControl = (action: string) => {
+    ipcRenderer.send("appControl", action);
+  };
+
+  useEffect(() => {
+    history.replace("/");
+  }, []);
+
+  return (
+    <AppStyled className="app" electron={window.electron}>
+      {window.electron && (
+        <div className="titleBar">
+          <div onClick={() => appControl("minimize")}>
+            <i className="bx bx-minus" />
+          </div>
+
+          <div onClick={() => appControl("maximize")}>
+            <i className="bx bx-square" />
+          </div>
+
+          <div className="close" onClick={() => appControl("close")}>
+            <i className="bx bx-x" />
+          </div>
+        </div>
+      )}
+
+      <div className="main">
+        <Sidebar />
+        <Content />
+      </div>
+    </AppStyled>
+  );
+}
 
 export default function App() {
   const [themeModeLS] = useLocalStorage("theme", "dark");
@@ -56,12 +100,9 @@ export default function App() {
           : darkTheme
       }
     >
-      <GlobalStyled />
+      <GlobalStyled electron={window.electron} />
       <BrowserRouter>
-        <AppStyled className="app">
-          <Sidebar />
-          <Content />
-        </AppStyled>
+        <AppInner />
       </BrowserRouter>
     </ThemeProvider>
   );

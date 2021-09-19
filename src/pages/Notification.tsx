@@ -441,8 +441,8 @@ export default function Notification() {
     }
 
     const createItemInitValue = getCreateItemInitValue();
-    formik.setValues([...(notification as Item[]), createItemInitValue]);
-    setTableData([...(notification as Item[]), createItemInitValue]);
+    formik.setValues([createItemInitValue, ...(notification as Item[])]);
+    setTableData([createItemInitValue, ...(notification as Item[])]);
   }, [notification]);
 
   return (
@@ -452,7 +452,9 @@ export default function Notification() {
         // @ts-ignore
         columns={columns}
         dataSource={tableData}
-        pagination={false}
+        pagination={{
+          pageSize: 8,
+        }}
         rowKey="id"
       />
     </NotificationStyled>

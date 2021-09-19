@@ -2,21 +2,70 @@ import styled, { createGlobalStyle } from "styled-components";
 import hexToRgba from "hex-to-rgba";
 import { lighten } from "polished";
 
-export const AppStyled = styled.div`
+interface ElectronProp {
+  electron?: boolean;
+}
+
+export const AppStyled = styled.div<ElectronProp>`
   width: 100%;
   height: 100vh;
-  display: flex;
   color: ${(props) => props.theme.textColor1};
+
+  .titleBar {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 25px;
+    -webkit-app-region: drag;
+
+    > div {
+      width: 35px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: ${(props) => props.theme.textColor2};
+      transition: 200ms color, 200ms background-color;
+      -webkit-app-region: no-drag;
+
+      &:hover {
+        background-color: ${(props) => lighten(0.05, props.theme.sidebarBG)};
+
+        &.close {
+          background-color: ${(props) => props.theme.error};
+          color: ${(props) => props.theme.textColor1};
+        }
+      }
+
+      &.close {
+        font-size: 1.2rem;
+      }
+
+      &:first-child {
+        font-size: 1.2rem;
+        i {
+          margin-top: 1px;
+        }
+      }
+    }
+  }
+
+  .main {
+    width: 100%;
+    height: ${(props) => (props.electron ? "calc(100% - 25px)" : "100%")};
+    display: flex;
+  }
 `;
 
-export const GlobalStyled = createGlobalStyle`
+export const GlobalStyled = createGlobalStyle<ElectronProp>`
   body {
     background-color: ${(props) => props.theme.sidebarBG};
     user-select: none;
   }
 
   *::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
     height: 10px;
   }
 
@@ -191,5 +240,48 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-table-tbody > tr > td {
     color: ${(props) => props.theme.textColor1};
+  }
+
+  .ant-pagination-item {
+    border-color: ${(props) => props.theme.borderColor};
+    background-color: ${(props) => props.theme.sidebarBG};
+    
+    a {
+      color: ${(props) => props.theme.textColor1};
+    }
+  }
+
+  .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link {
+    background-color: ${(props) => props.theme.sidebarBG};
+    border-color: ${(props) => props.theme.borderColor};
+    color: ${(props) => props.theme.textColor1};
+  }
+
+  .ant-pagination-prev:focus-visible .ant-pagination-item-link, .ant-pagination-next:focus-visible .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: ${(props) => props.theme.primary};
+    color: ${(props) => props.theme.primary};
+  }
+
+  .ant-pagination-disabled .ant-pagination-item-link, .ant-pagination-disabled:hover .ant-pagination-item-link, .ant-pagination-disabled:focus-visible .ant-pagination-item-link {
+    color: ${(props) => props.theme.textColor2};
+    border-color: ${(props) => props.theme.borderColor};
+  }
+
+  .ant-pagination-item-active:focus-visible, .ant-pagination-item-active:hover,
+  .ant-pagination-item:focus-visible, .ant-pagination-item:hover {
+    border-color: ${(props) => props.theme.primary};
+  }
+
+  .ant-pagination-item-active:focus-visible a, .ant-pagination-item-active:hover a,
+  .ant-pagination-item:focus-visible a, .ant-pagination-item:hover a {
+    color: ${(props) => props.theme.primary};
+  }
+
+  .ant-pagination-item-active {
+    border-color: ${(props) => props.theme.primary};
+  }
+
+  .ant-pagination-item-active a {
+    color: ${(props) => props.theme.primary};
   }
 `;

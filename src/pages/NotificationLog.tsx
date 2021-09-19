@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Button, Popover, Table } from "antd";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { notificationLogTimeState } from "~/stores/notificationLogs";
@@ -18,6 +18,54 @@ const NotificationLogStyled = styled.div`
     color: ${(props) => props.theme.error};
   }
 `;
+
+function SearchItemInfo({ log }: { log: any }) {
+  if (!log.test) {
+    return null;
+  }
+
+  const item = log.test.item._origin;
+
+  return (
+    <>
+      [{item.accessory}]{" "}
+      <span style={{ color: "#7e57c2" }}>
+        {item.characteristic1}
+        {item.characteristic2 ? " / " + item.characteristic2 : ""}
+      </span>{" "}
+      -{" "}
+      <span style={{ color: "#5c6bc0" }}>
+        {item.engrave1 + item.engrave1min}
+        {item.engrave2 ? " / " + item.engrave2 + item.engrave2min : ""}
+      </span>{" "}
+      - {item.quality} -{" "}
+      <span style={{ color: "#ffca28" }}>
+        최대 ${Number(item.maxPrice).toLocaleString()} 골드
+      </span>
+    </>
+  );
+}
+
+function Desc({ log }: { log: any }) {
+  const popovers: Record<any, any> = {
+    "overflow-maxPrice": {
+      title: "그나마 싼 매물",
+      content: <>hi</>,
+    },
+  };
+
+  if (popovers[log.status]) {
+    const popover = popovers[log.status];
+
+    return (
+      <Popover title={popover.title} content={popover.content} trigger="hover">
+        <Button>{log.desc}</Button>
+      </Popover>
+    );
+  } else {
+    return log.desc;
+  }
+}
 
 export default function NotificationLog() {
   const logTime = useRecoilValue(notificationLogTimeState);
@@ -42,33 +90,8 @@ export default function NotificationLog() {
     },
     {
       title: "검색한 매물 간략 설명",
-      key: "item",
-      render: (data: any) => {
-        if (!data.test) {
-          return "";
-        }
-
-        const item = data.test.item._origin;
-
-        return (
-          <>
-            [{item.accessory}]{" "}
-            <span style={{ color: "#7e57c2" }}>
-              {item.characteristic1}
-              {item.characteristic2 ? " / " + item.characteristic2 : ""}
-            </span>{" "}
-            -{" "}
-            <span style={{ color: "#5c6bc0" }}>
-              {item.engrave1}
-              {item.engrave2 ? " / " + item.engrave2 : ""}
-            </span>{" "}
-            - {item.quality} -{" "}
-            <span style={{ color: "#ffca28" }}>
-              최대 ${Number(item.maxPrice).toLocaleString()} 골드
-            </span>
-          </>
-        );
-      },
+      key: "searchItemInfo",
+      render: (log: any) => <SearchItemInfo log={log} />,
     },
     {
       title: "시간",
@@ -78,7 +101,7 @@ export default function NotificationLog() {
     {
       title: "설명",
       key: "desc",
-      render: (data: any) => data.desc,
+      render: (data: any) => <Desc log={data} />,
     },
   ];
 
@@ -88,7 +111,9 @@ export default function NotificationLog() {
         // @ts-ignore
         columns={columns}
         dataSource={logs.reverse()}
-        pagination={false}
+        pagination={{
+          pageSize: 8,
+        }}
         rowKey="id"
       />
     </NotificationLogStyled>

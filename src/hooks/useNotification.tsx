@@ -46,7 +46,12 @@ export default function useNotification() {
   }, []);
 
   useEffect(() => {
-    if (!setting.lostarkID || !setting.lostarkPW || globalState.initBrowser) {
+    if (
+      !setting.lostarkID ||
+      !setting.lostarkPW ||
+      globalState.initBrowser ||
+      !window.electron
+    ) {
       return;
     }
 
