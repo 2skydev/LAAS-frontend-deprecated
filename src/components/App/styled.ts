@@ -2,11 +2,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import hexToRgba from "hex-to-rgba";
 import { lighten } from "polished";
 
-interface ElectronProp {
-  electron?: boolean;
-}
-
-export const AppStyled = styled.div<ElectronProp>`
+export const AppStyled = styled.div`
   width: 100%;
   height: 100vh;
   color: ${(props) => props.theme.textColor1};
@@ -53,12 +49,12 @@ export const AppStyled = styled.div<ElectronProp>`
 
   .main {
     width: 100%;
-    height: ${(props) => (props.electron ? "calc(100% - 25px)" : "100%")};
+    height: calc(100% - 25px);
     display: flex;
   }
 `;
 
-export const GlobalStyled = createGlobalStyle<ElectronProp>`
+export const GlobalStyled = createGlobalStyle`
   body {
     background-color: ${(props) => props.theme.sidebarBG};
     user-select: none;

@@ -4,13 +4,7 @@ import { globalAtom } from "~/stores/global";
 import { notificationLogTimeState } from "~/stores/notificationLogs";
 import { notificationSettingState } from "~/stores/notificationSetting";
 
-const isElectron = window.electron;
-let ipcRenderer: any;
-
-if (isElectron) {
-  const { ipcRenderer: _ipcRenderer } = window.require("electron");
-  ipcRenderer = _ipcRenderer;
-}
+const { ipcRenderer } = window.require("electron");
 
 let handle: any;
 
@@ -20,10 +14,6 @@ export default function useNotification() {
   const [, setNotificationLogTime] = useRecoilState(notificationLogTimeState);
 
   const request = useCallback((setting) => {
-    if (window.electron !== true) {
-      return;
-    }
-
     const items = JSON.parse(
       window.localStorage.getItem("notification") || "[]"
     ) as any[];
@@ -46,12 +36,7 @@ export default function useNotification() {
   }, []);
 
   useEffect(() => {
-    if (
-      !setting.lostarkID ||
-      !setting.lostarkPW ||
-      globalState.initBrowser ||
-      !window.electron
-    ) {
+    if (!setting.lostarkID || !setting.lostarkPW || globalState.initBrowser) {
       return;
     }
 
@@ -61,10 +46,6 @@ export default function useNotification() {
   }, [setting.lostarkID, setting.lostarkPW, globalState.initBrowser]);
 
   useEffect(() => {
-    if (window.electron !== true) {
-      return;
-    }
-
     ipcRenderer.on("notification-logs", (event: any, logs: any) => {
       window.notificationLogs.push(...logs);
       setNotificationLogTime(performance.now());

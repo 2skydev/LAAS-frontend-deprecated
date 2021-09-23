@@ -18,7 +18,7 @@ export default function Content() {
           transition={{ duration: 0.3 }}
           key={location.pathname}
         >
-          {route?.text || "해당 페이지의 이름이 없는거 같네요..."}
+          {route?.text || "해당 페이지의 이름이 없는거 같네요 :("}
         </motion.span>
       </div>
 

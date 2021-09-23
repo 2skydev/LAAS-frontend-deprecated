@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import useNotification from "~/hooks/useNotification";
 import { notificationSettingState } from "~/stores/notificationSetting";
 
+const { ipcRenderer } = window.require("electron");
+
 type Theme = typeof lightTheme;
 
 declare module "styled-components" {
@@ -32,13 +34,6 @@ declare global {
 
 window.notificationLogs = [];
 
-let ipcRenderer: any;
-
-if (window.electron) {
-  const { ipcRenderer: _ipcRenderer } = window.require("electron");
-  ipcRenderer = _ipcRenderer;
-}
-
 function AppInner() {
   const history = useHistory();
 
@@ -51,22 +46,20 @@ function AppInner() {
   }, []);
 
   return (
-    <AppStyled className="app" electron={window.electron}>
-      {window.electron && (
-        <div className="titleBar">
-          <div onClick={() => appControl("minimize")}>
-            <i className="bx bx-minus" />
-          </div>
-
-          <div onClick={() => appControl("maximize")}>
-            <i className="bx bx-square" />
-          </div>
-
-          <div className="close" onClick={() => appControl("close")}>
-            <i className="bx bx-x" />
-          </div>
+    <AppStyled className="app">
+      <div className="titleBar">
+        <div onClick={() => appControl("minimize")}>
+          <i className="bx bx-minus" />
         </div>
-      )}
+
+        <div onClick={() => appControl("maximize")}>
+          <i className="bx bx-square" />
+        </div>
+
+        <div className="close" onClick={() => appControl("close")}>
+          <i className="bx bx-x" />
+        </div>
+      </div>
 
       <div className="main">
         <Sidebar />
@@ -100,7 +93,7 @@ export default function App() {
           : darkTheme
       }
     >
-      <GlobalStyled electron={window.electron} />
+      <GlobalStyled />
       <BrowserRouter>
         <AppInner />
       </BrowserRouter>
