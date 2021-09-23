@@ -1,10 +1,11 @@
 import { Input, InputNumber, Space, Switch } from "antd";
 import { useFormik } from "formik";
-import { useLocalStorage } from "react-use";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import SaveButton from "~/components/SaveButton";
 import Section from "~/components/Section";
 import { notificationSettingState } from "~/stores/notificationSetting";
+
+const { ipcRenderer } = window.require("electron");
 
 const initialValues = {
   lostarkID: "",
@@ -17,17 +18,14 @@ const initialValues = {
 type InitialValues = typeof initialValues;
 
 export default function SettingNotification() {
-  const [LS, setLS] = useLocalStorage<InitialValues>(
-    "setting-notification",
-    initialValues
+  const [notificationSetting, setNotificationSetting] = useRecoilState(
+    notificationSettingState
   );
 
-  const setNotificationSetting = useSetRecoilState(notificationSettingState);
-
   const formik = useFormik({
-    initialValues: LS as InitialValues,
+    initialValues: notificationSetting as InitialValues,
     onSubmit: (values) => {
-      setLS(values);
+      ipcRenderer.invoke("setConfig", "notification", values);
       setNotificationSetting(values);
     },
   });
@@ -141,7 +139,7 @@ export default function SettingNotification() {
       </Section>
 
       <SaveButton
-        defaultValues={LS}
+        defaultValues={notificationSetting}
         formikValues={formik.values}
         onSubmit={formik.submitForm}
       />

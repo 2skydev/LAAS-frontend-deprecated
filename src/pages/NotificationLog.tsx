@@ -1,7 +1,7 @@
 import { Button, Popover, Table } from "antd";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { notificationLogTimeState } from "~/stores/notificationLogs";
+import { notificationLogsState } from "~/stores/notificationLogs";
 
 const NotificationLogStyled = styled.div`
   .ok,
@@ -68,8 +68,7 @@ function Desc({ log }: { log: any }) {
 }
 
 export default function NotificationLog() {
-  const logTime = useRecoilValue(notificationLogTimeState);
-  const logs = [...window.notificationLogs];
+  const logs = useRecoilValue(notificationLogsState);
 
   const columns = [
     {
@@ -110,7 +109,7 @@ export default function NotificationLog() {
       <Table
         // @ts-ignore
         columns={columns}
-        dataSource={logs.reverse()}
+        dataSource={logs}
         pagination={{
           pageSize: 8,
         }}
