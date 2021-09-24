@@ -13,6 +13,7 @@ const initialValues = {
   discordUserID: "",
   interval: 1,
   repeat: false,
+  saveLogs: false,
 };
 
 type InitialValues = typeof initialValues;
@@ -133,6 +134,25 @@ export default function SettingNotification() {
         <Switch
           checked={formik.values.repeat}
           onChange={(value) => formik.setFieldValue("repeat", value)}
+          checkedChildren={<i className="bx bx-check" />}
+          unCheckedChildren={<i className="bx bx-x" />}
+        />
+      </Section>
+
+      <Section
+        title="로그 저장"
+        desc={
+          <>
+            앱을 완전히 종료해도 매물 알림 로그를 저장할지 설정합니다
+            <br />
+            해당 옵션이 꺼져있다면 로그를 저장하지 않습니다.
+            <br />이 옵션은 되도록 끄는것이 좋습니다.
+          </>
+        }
+      >
+        <Switch
+          checked={formik.values.saveLogs}
+          onChange={(value) => formik.setFieldValue("saveLogs", value)}
           checkedChildren={<i className="bx bx-check" />}
           unCheckedChildren={<i className="bx bx-x" />}
         />

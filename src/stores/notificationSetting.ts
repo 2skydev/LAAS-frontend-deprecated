@@ -8,5 +8,6 @@ export const notificationSettingState = atom({
     discordUserID: "",
     repeat: false,
     interval: 1,
+    saveLogs: false,
   },
 });

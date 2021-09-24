@@ -6,12 +6,15 @@ import Engrave from "../components/Select/Engrave";
 import Accessory from "../components/Select/Accessory";
 import Quality from "../components/Select/Quality";
 import { useFormik } from "formik";
-import { useLocalStorage } from "react-use";
 import accessoryNativeValues from "~/assets/json/accessory.json";
 import characteristicNativeValues from "~/assets/json/characteristic.json";
 import engraveNativeValues from "~/assets/json/engrave.json";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useRecoilState } from "recoil";
+import { notificationItemsState, Item } from "~/stores/notificationItems";
+
+const { ipcRenderer } = window.require("electron");
 
 const NotificationStyled = styled.div`
   .ant-card {
@@ -34,39 +37,10 @@ const statusLabel = {
   },
 };
 
-interface NativeValues {
-  accessory: string;
-  characteristic1: string;
-  characteristic2: string;
-  engrave1: string;
-  engrave2: string;
-  quality: string;
-}
-
-interface Item {
-  id: number;
-  accessory: string;
-  characteristic1: string;
-  characteristic2: string;
-  engrave1: string;
-  engrave2: string;
-  engrave1min: string;
-  engrave2min: string;
-  quality: string;
-  maxPrice: string;
-  memo: string;
-  status: "create" | "save" | "edit";
-  native: NativeValues;
-}
-
-let init = false;
-
 export default function Notification() {
-  let [notification, setNotification] = useLocalStorage<Item[]>(
-    "notification",
-    []
+  const [notificationItems, setNotificationItems] = useRecoilState(
+    notificationItemsState
   );
-
   const [tableData, setTableData] = useState<Item[]>([]);
 
   const formik = useFormik<Item[]>({
@@ -153,6 +127,11 @@ export default function Notification() {
     });
   };
 
+  const syncData = async (items: Item[]) => {
+    await ipcRenderer.invoke("setItems", items);
+    setNotificationItems(items);
+  };
+
   const save = (index: number) => {
     const item = formik.values[index];
 
@@ -168,7 +147,7 @@ export default function Notification() {
       item.engrave2min = "";
     }
 
-    const items = [...(notification as Item[])];
+    const items = [...notificationItems];
 
     const accessoryNativeValue = accessoryNativeValues.find(
       (x) => x.label === item.accessory
@@ -186,7 +165,7 @@ export default function Notification() {
       (x) => x.label === item.engrave2
     );
 
-    items[index] = {
+    items.unshift({
       ...item,
       status: "save",
       native: {
@@ -197,9 +176,9 @@ export default function Notification() {
         engrave2: engrave2NativeValue?.value || "",
         quality: item.quality.replace("이상", ""),
       },
-    };
+    });
 
-    setNotification(items);
+    syncData(items);
   };
 
   const deleteItem = (index: number) => {
@@ -208,7 +187,7 @@ export default function Notification() {
     items.splice(index, 1);
     items.pop();
 
-    setNotification(items);
+    syncData(items);
   };
 
   const getCreateItemInitValue = (): Item => ({
@@ -435,15 +414,11 @@ export default function Notification() {
   ];
 
   useEffect(() => {
-    if (!init) {
-      init = true;
-      return;
-    }
+    const items = [getCreateItemInitValue(), ...notificationItems];
 
-    const createItemInitValue = getCreateItemInitValue();
-    formik.setValues([createItemInitValue, ...(notification as Item[])]);
-    setTableData([createItemInitValue, ...(notification as Item[])]);
-  }, [notification]);
+    formik.setValues(items);
+    setTableData(items);
+  }, [notificationItems]);
 
   return (
     <NotificationStyled>

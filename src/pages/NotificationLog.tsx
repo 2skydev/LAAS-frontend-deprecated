@@ -1,6 +1,7 @@
 import { Button, Popover, Table } from "antd";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import NotificationStatus from "~/components/NotificationStatus";
 import { notificationLogsState } from "~/stores/notificationLogs";
 
 const NotificationLogStyled = styled.div`
@@ -24,31 +25,28 @@ function SearchItemInfo({ log }: { log: any }) {
     return null;
   }
 
-  const item = log.test.item._origin;
+  const item = log.test.item;
 
   return (
-    <>
-      [{item.accessory}]{" "}
-      <span style={{ color: "#7e57c2" }}>
-        {item.characteristic1}
-        {item.characteristic2 ? " / " + item.characteristic2 : ""}
-      </span>{" "}
-      -{" "}
-      <span style={{ color: "#5c6bc0" }}>
+    <span style={{ color: "#b0bec5" }}>
+      <span style={{ color: "#ffa726" }}>[{item.accessory}]</span>{" "}
+      {item.characteristic1}
+      {item.characteristic2 ? " / " + item.characteristic2 : ""} -{" "}
+      <span style={{ color: "#b0bec5" }}>
         {item.engrave1 + item.engrave1min}
         {item.engrave2 ? " / " + item.engrave2 + item.engrave2min : ""}
       </span>{" "}
       - {item.quality} -{" "}
       <span style={{ color: "#ffca28" }}>
-        최대 ${Number(item.maxPrice).toLocaleString()} 골드
+        최대 {Number(item.maxPrice).toLocaleString()} 골드
       </span>
-    </>
+    </span>
   );
 }
 
 function Desc({ log }: { log: any }) {
   const popovers: Record<any, any> = {
-    "overflow-maxPrice": {
+    overflowMaxPrice: {
       title: "그나마 싼 매물",
       content: <>hi</>,
     },
@@ -69,6 +67,8 @@ function Desc({ log }: { log: any }) {
 
 export default function NotificationLog() {
   const logs = useRecoilValue(notificationLogsState);
+
+  console.log(logs);
 
   const columns = [
     {
@@ -106,6 +106,8 @@ export default function NotificationLog() {
 
   return (
     <NotificationLogStyled>
+      <NotificationStatus />
+
       <Table
         // @ts-ignore
         columns={columns}

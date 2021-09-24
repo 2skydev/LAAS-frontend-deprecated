@@ -26,6 +26,14 @@ export default function useNotification() {
     ipcRenderer.on("logs", (event: any, logs: any) => {
       setNotificationLogs(logs);
     });
+
+    ipcRenderer.on("notificationStatus", (event: any, status: any) => {
+      setGlobalState(
+        produce((v) => {
+          v.notificationStatus = status;
+        })
+      );
+    });
   }, []);
 
   const initBrowser = useCallback(async () => {
