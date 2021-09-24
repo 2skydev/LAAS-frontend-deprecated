@@ -5,6 +5,7 @@ import { globalAtom } from "~/stores/global";
 import { notificationSettingState } from "~/stores/notificationSetting";
 import { notificationItemsState } from "~/stores/notificationItems";
 import { notificationLogsState } from "~/stores/notificationLogs";
+import { notification } from "antd";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -28,14 +29,31 @@ export default function useNotification() {
   }, []);
 
   const initBrowser = useCallback(async () => {
-    const result = await ipcRenderer.invoke("initBrowser");
+    const status = await ipcRenderer.invoke("initBrowser");
 
-    if (result) {
-      setGlobalState(
-        produce((v) => {
-          v.initBrowser = true;
-        })
-      );
+    switch (status) {
+      case "ok": {
+        setGlobalState(
+          produce((v) => {
+            v.initBrowser = true;
+          })
+        );
+        break;
+      }
+
+      case "loginFail": {
+        notification.error({
+          message: "로그인 실패!",
+          description: (
+            <>
+              로스트아크 로그인에 실패하였습니다
+              <br />
+              알림 설정에서 아이디 비밀번호를 확인해주세요
+            </>
+          ),
+        });
+        break;
+      }
     }
   }, []);
 

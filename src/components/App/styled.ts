@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import hexToRgba from "hex-to-rgba";
-import { lighten } from "polished";
+import { darken, lighten } from "polished";
 
 export const AppStyled = styled.div`
   width: 100%;
@@ -279,5 +279,25 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-pagination-item-active a {
     color: ${(props) => props.theme.primary};
+  }
+
+  .ant-notification {
+    top: 3rem !important;
+  }
+
+  .ant-notification-notice {
+    border-radius: 5px;
+    padding: 1.5rem 2rem;
+    width: 25rem;
+    background-color: ${(props) => lighten(0.1, props.theme.contentBG)};
+    color: ${(props) => darken(0.15, props.theme.textColor1)};
+
+    .ant-notification-notice-message {
+      color: ${(props) => props.theme.textColor1};
+    }
+
+    .ant-notification-notice-close {
+      color: ${(props) => props.theme.textColor1};
+    }
   }
 `;
