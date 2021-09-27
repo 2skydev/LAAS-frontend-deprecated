@@ -4,7 +4,7 @@ import characteristicOptions from "~/assets/json/characteristic.json";
 export default function Characteristic(props: AutoCompleteProps) {
   return (
     <AutoComplete
-      style={{ width: "80px" }}
+      style={{ width: "60px" }}
       options={characteristicOptions.map((option) => ({ value: option.label }))}
       placeholder="특성"
       filterOption={(value, option) =>

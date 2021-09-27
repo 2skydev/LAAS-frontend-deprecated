@@ -239,7 +239,7 @@ export default function Notification() {
     {
       title: "특성 1",
       key: "characteristic1",
-      width: 80,
+      width: 60,
       render: (_: any, data: any, index: number) => {
         return (
           <Characteristic
@@ -253,7 +253,7 @@ export default function Notification() {
     {
       title: "특성 2",
       key: "characteristic2",
-      width: 80,
+      width: 60,
       render: (_: any, data: any, index: number) => {
         return (
           <Characteristic
@@ -358,7 +358,7 @@ export default function Notification() {
     {
       title: "메모",
       key: "memo",
-      width: 140,
+      width: 180,
       render: (_: any, data: any, index: number) => {
         return (
           <Input
@@ -374,7 +374,7 @@ export default function Notification() {
       title: "상태",
       dataIndex: "status",
       key: "status",
-      width: 80,
+      width: 70,
       render: (_: any, data: any, index: number) => {
         const status = formik.values[index].status;
 
