@@ -129,8 +129,6 @@ function Desc({ log }: { log: any }) {
 export default function NotificationLog() {
   const logs = useRecoilValue(notificationLogsState);
 
-  console.log(logs);
-
   const columns = [
     {
       title: "검색 회차",

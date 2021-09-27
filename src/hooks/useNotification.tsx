@@ -34,6 +34,12 @@ export default function useNotification() {
         })
       );
     });
+
+    setGlobalState(
+      produce((v) => {
+        v.initState = true;
+      })
+    );
   }, []);
 
   const initBrowser = useCallback(async () => {
@@ -71,20 +77,30 @@ export default function useNotification() {
   }, []);
 
   useEffect(() => {
-    if (
-      !setting.lostarkID ||
-      !setting.lostarkPW ||
-      !setting.discordUserID ||
-      globalState.initBrowser
-    ) {
+    console.log(globalState.initState);
+    if (!globalState.initState) return;
+
+    if (!setting.lostarkID || !setting.lostarkPW || !setting.discordUserID) {
+      setGlobalState(
+        produce((v) => {
+          v.notificationStatus = {
+            id: "configNeeded",
+            status: "warning",
+            desc: "알림 설정에서 필수 사항을 입력해주세요 :)",
+          };
+        })
+      );
       return;
     }
+
+    if (globalState.initBrowser) return;
 
     initBrowser();
   }, [
     setting.lostarkID,
     setting.lostarkPW,
     setting.discordUserID,
+    globalState.initState,
     globalState.initBrowser,
   ]);
 }

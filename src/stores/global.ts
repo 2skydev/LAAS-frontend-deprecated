@@ -3,6 +3,7 @@ import { atom } from "recoil";
 export const globalAtom = atom({
   key: "global",
   default: {
+    initState: false,
     initBrowser: false,
     notificationStatus: {
       id: "loadConfig",
