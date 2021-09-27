@@ -330,4 +330,22 @@ export const GlobalStyled = createGlobalStyle`
       color: ${(props) => props.theme.textColor1};
     }
   }
+
+  .ant-popover-inner {
+    background-color: ${(props) => props.theme.contentBG};
+
+    .ant-popover-title {
+      color: ${(props) => props.theme.textColor1};
+      border-color: ${(props) => props.theme.borderColor};
+      padding: .5rem 1rem;
+    }
+
+    .ant-popover-inner-content {
+      color: ${(props) => props.theme.textColor2};
+
+      .value {
+        color: ${(props) => props.theme.textColor1};
+      }
+    }
+  }
 `;

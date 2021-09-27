@@ -1,4 +1,5 @@
 import { Button, Popover, Table } from "antd";
+import moment from "moment";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import NotificationStatus from "~/components/NotificationStatus";
@@ -31,12 +32,12 @@ function SearchItemInfo({ log }: { log: any }) {
     <span style={{ color: "#b0bec5" }}>
       <span style={{ color: "#ffa726" }}>[{item.accessory}]</span>{" "}
       {item.characteristic1}
-      {item.characteristic2 ? " / " + item.characteristic2 : ""} -{" "}
+      {item.characteristic2 ? " / " + item.characteristic2 : ""} ·{" "}
       <span style={{ color: "#b0bec5" }}>
         {item.engrave1 + item.engrave1min}
         {item.engrave2 ? " / " + item.engrave2 + item.engrave2min : ""}
       </span>{" "}
-      - {item.quality} -{" "}
+      · {item.quality} ·{" "}
       <span style={{ color: "#ffca28" }}>
         최대 {Number(item.maxPrice).toLocaleString()} 골드
       </span>
@@ -48,7 +49,34 @@ function Desc({ log }: { log: any }) {
   const popovers: Record<any, any> = {
     overflowMaxPrice: {
       title: "그나마 싼 매물",
-      content: <>hi</>,
+      content: (
+        <div>
+          <div>
+            <span className="label">이름</span>:{" "}
+            <span className="value">{log?.result?.name}</span>
+          </div>
+
+          <div>
+            <span className="label">가격:</span>{" "}
+            <span className="value" style={{ color: "#ffca28" }}>
+              {log?.result?.price?.toLocaleString?.()}골드
+            </span>
+          </div>
+
+          <div>
+            <span className="label">품질:</span>{" "}
+            <span className="value">{log?.result?.quality}</span>
+          </div>
+
+          <div>
+            <div className="value">{log?.result?.engrave1}</div>
+            <div className="value">{log?.result?.engrave2}</div>
+            <div className="value" style={{ color: "#f44336" }}>
+              {log?.result?.debuff}
+            </div>
+          </div>
+        </div>
+      ),
     },
   };
 
@@ -56,7 +84,12 @@ function Desc({ log }: { log: any }) {
     const popover = popovers[log.status];
 
     return (
-      <Popover title={popover.title} content={popover.content} trigger="hover">
+      <Popover
+        title={popover.title}
+        content={popover.content}
+        trigger="click"
+        placement="left"
+      >
         <Button>{log.desc}</Button>
       </Popover>
     );
@@ -94,8 +127,12 @@ export default function NotificationLog() {
     },
     {
       title: "시간",
-      key: "time",
-      render: (data: any) => data.time,
+      key: "createdAt",
+      render: (data: any) =>
+        moment(data.createdAt)
+          .format("a h시 m분 s초")
+          .replace("pm", "오후")
+          .replace("am", "오전"),
     },
     {
       title: "설명",
