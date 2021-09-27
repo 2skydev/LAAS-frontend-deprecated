@@ -41,6 +41,7 @@ export default function SettingNotification() {
             <br />
             지정 PC, 소셜 로그인 같은 계정이 아닌 이메일 계정이 필요합니다.
             <br />
+            <br />
             <a
               href="https://member.onstove.com/v2.0/register"
               target="_blank"
@@ -77,6 +78,7 @@ export default function SettingNotification() {
             있습니다.
             <br />
             Discord 사용자 ID는 아래 링크를 참고해서 복사하면 됩니다.
+            <br />
             <br />
             <a
               href="https://support.discord.com/hc/ko/articles/206346498-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%84%9C%EB%B2%84-%EB%A9%94%EC%8B%9C%EC%A7%80-ID%EB%8A%94-%EC%96%B4%EB%94%94%EC%84%9C-%ED%99%95%EC%9D%B8%ED%95%98%EB%82%98%EC%9A%94-"
@@ -146,7 +148,11 @@ export default function SettingNotification() {
             앱을 완전히 종료해도 매물 알림 로그를 저장할지 설정합니다
             <br />
             해당 옵션이 꺼져있다면 로그를 저장하지 않습니다.
-            <br />이 옵션은 되도록 끄는것이 좋습니다.
+            <br />
+            <br />
+            <span style={{ color: "#f44336" }}>
+              해당 옵션은 되도록 사용하지 않는 것을 권장합니다.
+            </span>
           </>
         }
       >
