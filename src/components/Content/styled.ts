@@ -28,6 +28,7 @@ export const ContentStyled = styled.div`
   .content {
     padding: 3rem 2rem;
     overflow-y: auto;
-    max-height: calc(100% - 73px);
+    max-height: calc(100% - 73px - 10px);
+    margin: 5px 5px 5px 0;
   }
 `;
