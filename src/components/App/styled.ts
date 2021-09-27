@@ -100,25 +100,59 @@ export const GlobalStyled = createGlobalStyle`
   }
   
   .ant-table-tbody > tr.ant-table-placeholder:hover > td {
-    background-color: ${(props) => props.theme.contentBG};
-  }
-
-  .ant-table-thead > tr > th {
     background-color: ${(props) => props.theme.sidebarBG};
-    color: ${(props) => props.theme.textColor2};
   }
 
   .ant-table-thead > tr > th,
   .ant-table-tbody > tr > td {
-    border-color: ${(props) => props.theme.borderColor};
+    border: none;
+  }
+
+  .ant-table-thead > tr > th {
+    background-color: transparent;
+    color: ${(props) => props.theme.textColor2};
+    padding-bottom: 10px;
+  }
+
+  .ant-table-tbody > tr > td {
+    color: ${(props) => props.theme.textColor1};
+    background-color: ${(props) => props.theme.sidebarBG};
+    border-bottom: 6px solid ${(props) => props.theme.contentBG};
+
+    &:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 15px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 15px;
+    }
+  }
+
+  .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    display: none;
   }
 
   .ant-table-tbody > tr.ant-table-row:hover > td {
-    background-color: ${(props) => props.theme.contentBG};
+    background-color: ${(props) => props.theme.sidebarBG};
+  }
+
+
+  .ant-pagination-options {
+    display: none;
+  }
+
+  .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-ellipsis, .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
+    color: ${(props) => props.theme.textColor2};
+  }
+
+  .ant-pagination-jump-prev .ant-pagination-item-container .ant-pagination-item-link-icon, .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-link-icon {
+    color: ${(props) => props.theme.primary};
   }
 
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    background-color: ${(props) => props.theme.contentBG};
+    background-color: transparent;
     border-color: ${(props) => props.theme.borderColor};
   }
 
@@ -152,7 +186,7 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-input-number {
     border-color: ${(props) => props.theme.borderColor};
-    background-color: ${(props) => props.theme.contentBG};
+    background-color: transparent;
 
     input {
       color: ${(props) => props.theme.textColor1};
@@ -185,7 +219,7 @@ export const GlobalStyled = createGlobalStyle`
   }
 
   .ant-input {
-    background-color: ${(props) => props.theme.contentBG};
+    background-color: transparent;
     border-color: ${(props) => props.theme.borderColor};
     color: ${(props) => props.theme.textColor1};
 
@@ -232,10 +266,6 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-table-cell-fix-left, .ant-table-cell-fix-right {
     background-color: ${(props) => props.theme.contentBG};
-  }
-
-  .ant-table-tbody > tr > td {
-    color: ${(props) => props.theme.textColor1};
   }
 
   .ant-pagination-item {

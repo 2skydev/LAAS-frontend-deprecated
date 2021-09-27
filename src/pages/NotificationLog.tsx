@@ -114,6 +114,7 @@ export default function NotificationLog() {
         dataSource={logs}
         pagination={{
           pageSize: 8,
+          pageSizeOptions: [],
         }}
         rowKey="id"
       />

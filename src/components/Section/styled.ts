@@ -9,7 +9,7 @@ export const SectionStyled = styled.div`
 
   .section-left {
     h3 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
 
     p {
@@ -23,5 +23,9 @@ export const SectionStyled = styled.div`
     .ant-space-item {
       width: 100%;
     }
+  }
+
+  .spacing {
+    height: 0.6rem;
   }
 `;
