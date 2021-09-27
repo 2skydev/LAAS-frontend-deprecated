@@ -40,7 +40,8 @@ export default function useNotification() {
     const status = await ipcRenderer.invoke("initBrowser");
 
     switch (status) {
-      case "ok": {
+      case "ok":
+      case "existBrowser": {
         setGlobalState(
           produce((v) => {
             v.initBrowser = true;

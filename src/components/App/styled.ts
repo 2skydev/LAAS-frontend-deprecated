@@ -341,11 +341,11 @@ export const GlobalStyled = createGlobalStyle`
     }
 
     .ant-popover-inner-content {
-      color: ${(props) => props.theme.textColor2};
-
-      .value {
-        color: ${(props) => props.theme.textColor1};
-      }
+      color: ${(props) => props.theme.textColor1};
     }
+  }
+
+  .ant-popover-arrow-content {
+    background-color: ${(props) => props.theme.contentBG};
   }
 `;

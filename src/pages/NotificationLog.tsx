@@ -52,6 +52,34 @@ function Desc({ log }: { log: any }) {
       content: (
         <div>
           <div>
+            <span className="value">{log?.result?.name}</span>
+          </div>
+
+          <div>
+            <span className="value" style={{ color: "#ffca28" }}>
+              {log?.result?.price?.toLocaleString?.()}골드
+            </span>
+          </div>
+
+          <div>
+            <span className="value">품질 {log?.result?.quality}</span>
+          </div>
+
+          <div>
+            <div className="value">{log?.result?.engrave1}</div>
+            <div className="value">{log?.result?.engrave2}</div>
+            <div className="value" style={{ color: "#f44336" }}>
+              {log?.result?.debuff}
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    find: {
+      title: "찾은 매물",
+      content: (
+        <div>
+          <div>
             <span className="label">이름</span>:{" "}
             <span className="value">{log?.result?.name}</span>
           </div>

@@ -165,7 +165,7 @@ export default function Notification() {
       (x) => x.label === item.engrave2
     );
 
-    items.unshift({
+    const result: Item = {
       ...item,
       status: "save",
       native: {
@@ -176,7 +176,13 @@ export default function Notification() {
         engrave2: engrave2NativeValue?.value || "",
         quality: item.quality.replace("이상", ""),
       },
-    });
+    };
+
+    if (item.status === "create") {
+      items.push(result);
+    } else {
+      items[index] = result;
+    }
 
     syncData(items);
   };
@@ -321,7 +327,7 @@ export default function Notification() {
     {
       title: "품질",
       key: "quality",
-      width: 80,
+      width: 70,
       render: (_: any, data: any, index: number) => {
         return (
           <Quality
@@ -335,16 +341,16 @@ export default function Notification() {
     {
       title: "최대가격",
       key: "maxPrice",
-      width: 120,
+      width: 100,
       render: (_: any, data: any, index: number) => {
         return (
           <InputNumber
             className={clsx(data.status !== "create" && "noBorder")}
-            style={{ width: 110 }}
+            style={{ width: 100 }}
             placeholder="최대가격"
             value={formik.values[index].maxPrice}
             onChange={(value) => handleChangeMaxPrice(index, value)}
-            formatter={(value) => `${Number(value).toLocaleString()}골드`}
+            formatter={(value) => `${Number(value).toLocaleString()}`}
           />
         );
       },
@@ -352,7 +358,7 @@ export default function Notification() {
     {
       title: "메모",
       key: "memo",
-      width: 120,
+      width: 140,
       render: (_: any, data: any, index: number) => {
         return (
           <Input
@@ -414,7 +420,7 @@ export default function Notification() {
   ];
 
   useEffect(() => {
-    const items = [getCreateItemInitValue(), ...notificationItems];
+    const items = [...notificationItems, getCreateItemInitValue()];
 
     formik.setValues(items);
     setTableData(items);
@@ -427,9 +433,7 @@ export default function Notification() {
         // @ts-ignore
         columns={columns}
         dataSource={tableData}
-        pagination={{
-          pageSize: 8,
-        }}
+        pagination={false}
         rowKey="id"
       />
     </NotificationStyled>

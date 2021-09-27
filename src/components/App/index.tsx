@@ -5,12 +5,15 @@ import { ThemeProvider } from "styled-components";
 import Sidebar from "../Sidebar";
 import Content from "../Content";
 import useNotification from "~/hooks/useNotification";
-import { darkTheme } from "~/assets/ts/theme";
+import { lightTheme, darkTheme } from "~/assets/ts/theme";
 
 import { AppStyled, GlobalStyled } from "./styled";
 
 import "antd/dist/antd.css";
 import "./index.scss";
+import { useLocalStorage } from "react-use";
+import { useRecoilState } from "recoil";
+import { themeState } from "~/stores/theme";
 
 // electron import
 const { ipcRenderer } = window.require("electron");
@@ -68,8 +71,21 @@ function AppInner() {
 export default function App() {
   useNotification();
 
+  const [themeModeLS] = useLocalStorage("theme", "dark");
+  const [themeMode, setThemeMode] = useRecoilState(themeState);
+
+  useEffect(() => {
+    setThemeMode(themeModeLS as string);
+  }, []);
+
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider
+      theme={
+        (themeMode ? themeMode : themeModeLS) === "light"
+          ? lightTheme
+          : darkTheme
+      }
+    >
       <GlobalStyled />
       <BrowserRouter>
         <AppInner />

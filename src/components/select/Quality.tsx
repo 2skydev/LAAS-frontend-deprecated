@@ -7,7 +7,7 @@ const options = Array(9)
 export default function Quality(props: AutoCompleteProps) {
   return (
     <AutoComplete
-      style={{ width: "80px" }}
+      style={{ width: "70px" }}
       options={options}
       placeholder="품질"
       filterOption={(value, option) => option?.value.includes(value)}

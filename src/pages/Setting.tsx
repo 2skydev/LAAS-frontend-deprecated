@@ -5,14 +5,20 @@ import Section from "~/components/Section";
 import { themeState } from "~/stores/theme";
 
 export default function Setting() {
-  const [, setThemeModeLS] = useLocalStorage("theme", "light");
+  const [, setThemeModeLS] = useLocalStorage("theme", "dark");
   const [themeMode, setThemeMode] = useRecoilState(themeState);
 
   return (
     <div>
       <Section
         title="다크모드 설정"
-        desc="라이트모드, 다크모드를 선택해서 사용하실 수 있습니다."
+        desc={
+          <div>
+            라이트모드, 다크모드를 선택해서 사용하실 수 있습니다.
+            <br />
+            다크모드가 기본 설정이며 다크모드를 기준으로 앱이 만들어졌습니다.
+          </div>
+        }
       >
         <Switch
           checked={themeMode === "dark"}
