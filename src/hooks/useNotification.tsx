@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import produce from "immer";
 import { globalAtom } from "~/stores/global";
@@ -16,7 +16,7 @@ export default function useNotification() {
   const setNotificationItems = useSetRecoilState(notificationItemsState);
   const setNotificationLogs = useSetRecoilState(notificationLogsState);
 
-  const init = useCallback(async () => {
+  const init = async () => {
     setNotificationSetting(
       await ipcRenderer.invoke("getConfig", "notification")
     );
@@ -40,9 +40,9 @@ export default function useNotification() {
         v.initState = true;
       })
     );
-  }, []);
+  };
 
-  const initBrowser = useCallback(async () => {
+  const initBrowser = async () => {
     const status = await ipcRenderer.invoke("initBrowser");
 
     switch (status) {
@@ -70,14 +70,13 @@ export default function useNotification() {
         break;
       }
     }
-  }, []);
+  };
 
   useEffect(() => {
     init();
   }, []);
 
   useEffect(() => {
-    console.log(globalState.initState);
     if (!globalState.initState) return;
 
     if (!setting.lostarkID || !setting.lostarkPW || !setting.discordUserID) {
