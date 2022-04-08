@@ -1,4 +1,4 @@
-import { Button, Input, InputNumber, Space, Table, Tag, Tooltip } from "antd";
+import { Button, Divider, Input, InputNumber, Modal, Space, Table, Tag, Tooltip } from "antd";
 import styled from "styled-components";
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import Characteristic from "../components/Select/Characteristic";
@@ -6,6 +6,7 @@ import Engrave from "../components/Select/Engrave";
 import Accessory from "../components/Select/Accessory";
 import Quality from "../components/Select/Quality";
 import { useFormik } from "formik";
+import gradeNativeValues from "~/assets/json/grade.json";
 import accessoryNativeValues from "~/assets/json/accessory.json";
 import characteristicNativeValues from "~/assets/json/characteristic.json";
 import engraveNativeValues from "~/assets/json/engrave.json";
@@ -13,6 +14,7 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
 import { notificationItemsState, Item } from "~/stores/notificationItems";
+import Grade from "~/components/Select/Grade";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -65,6 +67,15 @@ export default function Notification() {
       return {
         ...item,
         accessory: value,
+      };
+    });
+  };
+
+  const handleSelectGrade = (index: number, value: string) => {
+    changeItemValue(index, (item) => {
+      return {
+        ...item,
+        grade: value,
       };
     });
   };
@@ -149,6 +160,9 @@ export default function Notification() {
 
     const items = [...notificationItems];
 
+    const gradeNativeValue = gradeNativeValues.find(
+      (x) => x.label === item.grade
+    );
     const accessoryNativeValue = accessoryNativeValues.find(
       (x) => x.label === item.accessory
     );
@@ -169,6 +183,7 @@ export default function Notification() {
       ...item,
       status: "save",
       native: {
+        grade: gradeNativeValue?.value || "",
         accessory: accessoryNativeValue?.value || "",
         characteristic1: characteristic1NativeValue?.value || "",
         characteristic2: characteristic2NativeValue?.value || "",
@@ -198,6 +213,7 @@ export default function Notification() {
 
   const getCreateItemInitValue = (): Item => ({
     id: performance.now(),
+    grade: '유물',
     accessory: "",
     characteristic1: "",
     characteristic2: "",
@@ -210,6 +226,7 @@ export default function Notification() {
     status: "create",
     maxPrice: "",
     native: {
+      grade: "5",
       accessory: "",
       characteristic1: "",
       characteristic2: "",
@@ -220,6 +237,22 @@ export default function Notification() {
   });
 
   const columns = [
+    {
+      title: "등급",
+      dataIndex: "grade",
+      key: "grade",
+      width: 70,
+      render: (_: any, data: any, index: number) => {
+        return (
+          <Grade
+            className={clsx(data.status !== "create" && "noBorder")}
+            key={data.id + data.status}
+            defaultValue={formik.values[index].grade}
+            onSelect={(value) => handleSelectGrade(index, value)}
+          />
+        );
+      },
+    },
     {
       title: "장신구",
       dataIndex: "accessory",
@@ -287,8 +320,8 @@ export default function Notification() {
               placeholder="최소"
               value={formik.values[index].engrave1min}
               onChange={(value) => handleSelectEngraveMin(index, 1, value)}
-              min="1"
-              max="5"
+              min="3"
+              max="6"
             />
           </Space>
         );
@@ -317,8 +350,8 @@ export default function Notification() {
               placeholder="최소"
               value={formik.values[index].engrave2min}
               onChange={(value) => handleSelectEngraveMin(index, 2, value)}
-              min="1"
-              max="5"
+              min="3"
+              max="6"
             />
           </Space>
         );
@@ -358,7 +391,7 @@ export default function Notification() {
     {
       title: "메모",
       key: "memo",
-      width: 180,
+      width: 120,
       render: (_: any, data: any, index: number) => {
         return (
           <Input

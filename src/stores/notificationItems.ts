@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 
 export interface NativeValues {
+  grade: string;
   accessory: string;
   characteristic1: string;
   characteristic2: string;
@@ -11,6 +12,7 @@ export interface NativeValues {
 
 export interface Item {
   id: number;
+  grade: string;
   accessory: string;
   characteristic1: string;
   characteristic2: string;

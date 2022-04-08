@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 import hexToRgba from "hex-to-rgba";
-import { darken, lighten } from "polished";
+import { darken, lighten, rgba } from "polished";
 
 export const AppStyled = styled.div`
   width: 100%;
@@ -151,9 +151,25 @@ export const GlobalStyled = createGlobalStyle`
     color: ${(props) => props.theme.primary};
   }
 
+  .ant-select:not(.ant-select-customize-input).ant-select-disabled .ant-select-selector {
+    background-color: transparent;
+    border-color: ${(props) => props.theme.borderColor};
+    opacity: .3;
+  }
+
   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     background-color: transparent;
     border-color: ${(props) => props.theme.borderColor};
+  }
+
+  .ant-select {
+    color: ${(props) => props.theme.textColor1};
+  }
+  
+  .ant-select-arrow {
+    color: ${(props) => props.theme.textColor1};
+    opacity: .7;
+    transform: scale(.7);
   }
 
   .ant-select-show-search.ant-select:not(.ant-select-customize-input)
@@ -182,6 +198,20 @@ export const GlobalStyled = createGlobalStyle`
   .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
     background-color: ${(props) => props.theme.selectedBG};
     color: ${(props) => props.theme.textColor1};
+  }
+
+  .ant-select-auto-complete .ant-select-clear {
+    right: -5px;
+    top: 0;
+  }
+
+  .ant-select-clear {
+    background: none;
+    color: ${(props) => rgba(props.theme.textColor1, .7)};
+
+    &:hover {
+      color: ${(props) => rgba(props.theme.textColor1, 1)};
+    }
   }
 
   .ant-input-number {
@@ -347,5 +377,38 @@ export const GlobalStyled = createGlobalStyle`
 
   .ant-popover-arrow-content {
     background-color: ${(props) => props.theme.contentBG};
+  }
+
+  .ant-modal-header {
+    border-radius: 0;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-color: ${(props) => props.theme.borderColor};
+    background-color: ${(props) => props.theme.contentBG};
+
+    .ant-modal-title {
+      color: ${(props) => props.theme.textColor1};
+      opacity: .9;
+    }
+  }
+
+  .ant-modal-close-x {
+    .anticon {
+      color: white;
+      transform: scale(.8);
+    }
+  }
+
+  .ant-modal-content {
+    border-radius: 1rem;
+    background-color: ${(props) => props.theme.contentBG};
+  }
+
+  .ant-modal-body {
+    padding: 1.5rem;
+  }
+
+  .ant-divider {
+    border-color: ${(props) => props.theme.borderColor};
   }
 `;

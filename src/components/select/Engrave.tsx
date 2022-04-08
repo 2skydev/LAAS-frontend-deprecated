@@ -11,6 +11,7 @@ export default function Engrave(props: AutoCompleteProps) {
       filterOption={(value, option) =>
         value.split("").every((word) => option?.value.includes(word))
       }
+      allowClear
       {...props}
     />
   );

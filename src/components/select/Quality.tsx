@@ -11,6 +11,7 @@ export default function Quality(props: AutoCompleteProps) {
       options={options}
       placeholder="품질"
       filterOption={(value, option) => option?.value.includes(value)}
+      allowClear
       {...props}
     />
   );

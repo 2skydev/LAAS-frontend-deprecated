@@ -30,7 +30,7 @@ function SearchItemInfo({ log }: { log: any }) {
 
   return (
     <span style={{ color: "#b0bec5" }}>
-      <span style={{ color: "#ffa726" }}>[{item.accessory}]</span>{" "}
+      <span style={{ color: +item.native.grade === 5 ? "#ffa726" : "#d5c394" }}>[{item.accessory}]</span>{" "}
       {item.characteristic1}
       {item.characteristic2 ? " / " + item.characteristic2 : ""} ·{" "}
       <span style={{ color: "#b0bec5" }}>
