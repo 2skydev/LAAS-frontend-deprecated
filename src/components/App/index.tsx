@@ -12,8 +12,10 @@ import { AppStyled, GlobalStyled } from "./styled";
 import "antd/dist/antd.css";
 import "./index.scss";
 import { useLocalStorage } from "react-use";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { themeState } from "~/stores/theme";
+import { globalAtom } from "~/stores/global";
+import produce from "immer";
 
 // electron import
 const { ipcRenderer } = window.require("electron");
@@ -73,8 +75,18 @@ export default function App() {
 
   const [themeModeLS] = useLocalStorage("theme", "dark");
   const [themeMode, setThemeMode] = useRecoilState(themeState);
+  const setGlobalStore = useSetRecoilState(globalAtom);
+
+  const getVersion = async () => {
+    const version = await ipcRenderer.invoke("getVersion");
+    
+    setGlobalStore(produce((draft) => {
+      draft.version = version;
+    }));
+  }
 
   useEffect(() => {
+    getVersion();
     setThemeMode(themeModeLS as string);
   }, []);
 

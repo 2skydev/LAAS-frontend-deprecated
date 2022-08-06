@@ -5,6 +5,7 @@ export const globalAtom = atom({
   default: {
     initState: false,
     initBrowser: false,
+    version: null,
     notificationStatus: {
       id: "loadConfig",
       status: "warning",
